@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Fainle的博客">
+    <meta name="keyword"  content="github">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+        二：决策树 - Fainle的博客 | Fainle&#39;s Blog
+        
+    </title>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/aircloud.css">
+    <link rel="stylesheet" href="/css/gitment.css">
+    <!--<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">-->
+    <link href="//at.alicdn.com/t/font_620856_pl6z7sid89qkt9.css" rel="stylesheet" type="text/css">
+    <!-- ga & ba script hoook -->
+    <script></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body>
+
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="site-nav-toggle" id="site-nav-toggle">
+    <button>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+    </button>
+</div>
+
+<div class="index-about">
+    <i> 人生苦短，多思考，少编程 </i>
+</div>
+
+<div class="index-container">
+    
+    <div class="index-left">
+        
+<div class="nav" id="nav">
+    <div class="avatar-name">
+        <div class="avatar ">
+            <img src="/img/avatar.jpg" />
+        </div>
+        <div class="name">
+            <i>Fainle</i>
+        </div>
+    </div>
+    <div class="contents" id="nav-content">
+        <ul>
+            <li >
+                <a href="/">
+                    <i class="iconfont icon-shouye1"></i>
+                    <span>主页</span>
+                </a>
+            </li>
+            <li >
+                <a href="/tags">
+                    <i class="iconfont icon-biaoqian1"></i>
+                    <span>标签</span>
+                </a>
+            </li>
+            <li >
+                <a href="/archive">
+                    <i class="iconfont icon-guidang2"></i>
+                    <span>存档</span>
+                </a>
+            </li>
+            <li >
+                <a href="/about/">
+                    <i class="iconfont icon-guanyu2"></i>
+                    <span>关于</span>
+                </a>
+            </li>
+            
+            <li>
+                <a id="search">
+                    <i class="iconfont icon-sousuo1"></i>
+                    <span>搜索</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    
+        <div id="toc" class="toc-article">
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#一-概述"><span class="toc-text">一 . 概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二-所属分类"><span class="toc-text">二 . 所属分类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三-Entropy-熵"><span class="toc-text">三 . Entropy (熵)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#四-Information-Gain-信息增益"><span class="toc-text">四 . Information Gain (信息增益)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#五-sklearn-决策树示例"><span class="toc-text">五 . sklearn 决策树示例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#可视化"><span class="toc-text">可视化</span></a></li></ol>
+</div>
+    
+</div>
+
+
+<div class="search-field" id="search-field">
+    <div class="search-container">
+        <div class="search-input">
+            <span id="esc-search"> <i class="icon-fanhui iconfont"></i></span>
+            <input id="search-input"/>
+            <span id="begin-search">搜索</span>
+        </div>
+        <div class="search-result-container" id="search-result-container">
+
+        </div>
+    </div>
+</div>
+
+        <div class="index-about-mobile">
+            <i> 人生苦短，多思考，少编程 </i>
+        </div>
+    </div>
+    
+    <div class="index-middle">
+        <!-- Main Content -->
+        
+
+
+<div class="post-container">
+    <div class="post-title">
+        二：决策树
+    </div>
+
+    <div class="post-meta">
+        <span class="attr">发布于：<span>2020-07-23 00:00:00</span></span>
+        
+        <span class="attr">标签：/
+        
+        <a class="tag" href="/tags/#机器学习笔记" title="机器学习笔记">机器学习笔记</a>
+        <span>/</span>
+        
+        
+        </span>
+        <span class="attr">访问：<span id="busuanzi_value_page_pv"></span>
+</span>
+</span>
+    </div>
+    <div class="post-content ">
+        <h3 id="一-概述"><a href="#一-概述" class="headerlink" title="一 . 概述"></a>一 . 概述</h3><p>决策树是一个预测模型；它代表的是对象属性与对象值之间的一种映射关系。树中每个节点表示某个对象，而每个分叉路径则代表某个可能的属性值，而每个叶节点则对应从根节点到该叶节点所经历的路径所表示的对象的值。决策树仅有单一输出，可以用于分析数据，同样也可以用来作预测。</p>
+<h3 id="二-所属分类"><a href="#二-所属分类" class="headerlink" title="二 . 所属分类"></a>二 . 所属分类</h3><p>决策树一般属于 监督学习。</p>
+<h3 id="三-Entropy-熵"><a href="#三-Entropy-熵" class="headerlink" title="三 . Entropy (熵)"></a>三 . Entropy (熵)</h3><p>决策树需要用到熵。</p>
+<p>熵是一个物理学概念，是一种测量在动力学方面不能做功的能量总数，也就是当总体的熵增加，其做功能力也下降，熵的量度正是能量退化的指标。熵亦被用于计算一个系统中的失序现象，也就是计算该系统混乱的程度。熵越低越稳定。</p>
+<p>公式</p>
+<script type="math/tex; mode=display">Entropy = -p_1log_2(p_1) - p_2log_2(p_2) ... -p_nlog_2(p_n)</script><p>简化</p>
+<script type="math/tex; mode=display">Entropy = -\sum_{n=1}^np_nlog_2(p_n)</script><p>其中p </p>
+<script type="math/tex; mode=display">p_i = \frac{p_i}{n}</script><h3 id="四-Information-Gain-信息增益"><a href="#四-Information-Gain-信息增益" class="headerlink" title="四 . Information Gain (信息增益)"></a>四 . Information Gain (信息增益)</h3><p>信息增益代表了在一个条件下，信息复杂度（不确定性）减少的程度。</p>
+<p>信息增益是特征选择的一个重要指标，它定义为一个特征能够为分类系统带来多少信息，带来的信息越多，说明该特征越重要，相应的信息增益也就越大。</p>
+<script type="math/tex; mode=display">Gain(D) = Entropy(D) - \frac{D^v}{D}\sum_{v=1}^vEntropy(D^v)</script><h3 id="五-sklearn-决策树示例"><a href="#五-sklearn-决策树示例" class="headerlink" title="五 . sklearn 决策树示例"></a>五 . sklearn 决策树示例</h3><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">import numpy as np</span><br><span class="line">from sklearn.tree import DecisionTreeClassifier</span><br><span class="line">from sklearn.metrics import accuracy_score</span><br><span class="line"></span><br><span class="line">data = np.asarray(pd.read_csv('data.csv', header=None)) <span class="comment"># 读取数据 去掉header头 并转为numpy array</span></span><br><span class="line"></span><br><span class="line">X = data[:, 0:2]</span><br><span class="line">y= data[:, 2]</span><br><span class="line"></span><br><span class="line">model = DecisionTreeClassifier(max_depth=7, min_samples_leaf=1, ) <span class="comment"># 选择决策树模型 其中最大深度为7 最小样本数为10 （当前数据中 如最小样本数为1 则可以准确性达到 100% , 最小样本数决定是否剪枝)</span></span><br><span class="line"></span><br><span class="line">reg = model.fit(X,y)  <span class="comment"># 训练模型</span></span><br><span class="line">y_pred = model.predict(X)  <span class="comment">#预测模型</span></span><br><span class="line"></span><br><span class="line">acc = accuracy_score(y, y_pred)  <span class="comment"># 查看计算准确度</span></span><br></pre></td></tr></table></figure>
+<h3 id="可视化"><a href="#可视化" class="headerlink" title="可视化"></a>可视化</h3><figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> graphviz</span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> tree</span><br><span class="line"></span><br><span class="line">dot_data = tree.export_graphviz(model, out_file=<span class="string">'tree.dot'</span>,</span><br><span class="line">#                                 feature_names=data.columns[:<span class="number">-1</span>], # 特征名称</span><br><span class="line">                                class_names=[<span class="string">'No'</span>, <span class="string">'Yes'</span>], # 目标变量的类别名</span><br><span class="line">                                filled=<span class="literal">True</span>, rounded=<span class="literal">True</span>,</span><br><span class="line">                                special_characters=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> open(<span class="string">'tree.dot'</span>) <span class="keyword">as</span> f:</span><br><span class="line">    dot = f.read()</span><br><span class="line">    </span><br><span class="line">graphviz.Source(dot)</span><br></pre></td></tr></table></figure>
+
+        
+        <br />
+        <div id="comment-container">
+        </div>
+        <div id="disqus_thread"></div>
+
+        <div id="lv-container">
+        </div>
+
+    </div>
+</div>
+
+    </div>
+</div>
+
+
+<footer class="footer">
+    <ul class="list-inline text-center">
+        
+        
+
+        
+
+        
+
+        
+        <li>
+            <a target="_blank"  href="https://github.com/Fainle">
+                            <span class="fa-stack fa-lg">
+                                <i class="iconfont icon-github"></i>
+                            </span>
+            </a>
+        </li>
+        
+
+        
+
+    </ul>
+    
+    <p>
+        <span>/</span>
+        
+    </p>
+    
+    <p>
+        <span id="busuanzi_container_site_pv">
+            <span id="busuanzi_value_site_pv"></span>PV
+        </span>
+        <span id="busuanzi_container_site_uv">
+            <span id="busuanzi_value_site_uv"></span>UV
+        </span>
+        Created By <a href="https://hexo.io/">Hexo</a>  Theme <a href="https://github.com/aircloud/hexo-theme-aircloud">AirCloud</a></p>
+</footer><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+
+</body>
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+<script>
+    // We expose some of the variables needed by the front end
+    window.hexo_search_path = "search.json"
+    window.hexo_root = "/"
+    window.isPost = true
+</script>
+
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="/js/index.js"></script>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+</html>
