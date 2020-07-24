@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Fainle的博客">
+    <meta name="keyword"  content="github">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+        四：支持向量机 (Support Vector Machine) - Fainle的博客 | Fainle&#39;s Blog
+        
+    </title>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/aircloud.css">
+    <link rel="stylesheet" href="/css/gitment.css">
+    <!--<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">-->
+    <link href="//at.alicdn.com/t/font_620856_pl6z7sid89qkt9.css" rel="stylesheet" type="text/css">
+    <!-- ga & ba script hoook -->
+    <script></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body>
+
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="site-nav-toggle" id="site-nav-toggle">
+    <button>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+    </button>
+</div>
+
+<div class="index-about">
+    <i> 人生苦短，多思考，少编程 </i>
+</div>
+
+<div class="index-container">
+    
+    <div class="index-left">
+        
+<div class="nav" id="nav">
+    <div class="avatar-name">
+        <div class="avatar ">
+            <img src="/img/avatar.jpg" />
+        </div>
+        <div class="name">
+            <i>Fainle</i>
+        </div>
+    </div>
+    <div class="contents" id="nav-content">
+        <ul>
+            <li >
+                <a href="/">
+                    <i class="iconfont icon-shouye1"></i>
+                    <span>主页</span>
+                </a>
+            </li>
+            <li >
+                <a href="/tags">
+                    <i class="iconfont icon-biaoqian1"></i>
+                    <span>标签</span>
+                </a>
+            </li>
+            <li >
+                <a href="/archive">
+                    <i class="iconfont icon-guidang2"></i>
+                    <span>存档</span>
+                </a>
+            </li>
+            <li >
+                <a href="/about/">
+                    <i class="iconfont icon-guanyu2"></i>
+                    <span>关于</span>
+                </a>
+            </li>
+            
+            <li>
+                <a id="search">
+                    <i class="iconfont icon-sousuo1"></i>
+                    <span>搜索</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    
+        <div id="toc" class="toc-article">
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#一-概述"><span class="toc-text">一 . 概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二-所属分类"><span class="toc-text">二 . 所属分类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三-Kernels"><span class="toc-text">三 . Kernels</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-polynomial"><span class="toc-text">1 . polynomial</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-rbf"><span class="toc-text">2 . rbf</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#四-sklearn-支持向量机示例"><span class="toc-text">四 . sklearn 支持向量机示例</span></a></li></ol>
+</div>
+    
+</div>
+
+
+<div class="search-field" id="search-field">
+    <div class="search-container">
+        <div class="search-input">
+            <span id="esc-search"> <i class="icon-fanhui iconfont"></i></span>
+            <input id="search-input"/>
+            <span id="begin-search">搜索</span>
+        </div>
+        <div class="search-result-container" id="search-result-container">
+
+        </div>
+    </div>
+</div>
+
+        <div class="index-about-mobile">
+            <i> 人生苦短，多思考，少编程 </i>
+        </div>
+    </div>
+    
+    <div class="index-middle">
+        <!-- Main Content -->
+        
+
+
+<div class="post-container">
+    <div class="post-title">
+        四：支持向量机 (Support Vector Machine)
+    </div>
+
+    <div class="post-meta">
+        <span class="attr">发布于：<span>2020-07-23 17:35:00</span></span>
+        
+        <span class="attr">标签：/
+        
+        <a class="tag" href="/tags/#机器学习笔记" title="机器学习笔记">机器学习笔记</a>
+        <span>/</span>
+        
+        
+        </span>
+        <span class="attr">访问：<span id="busuanzi_value_page_pv"></span>
+</span>
+</span>
+    </div>
+    <div class="post-content ">
+        <h3 id="一-概述"><a href="#一-概述" class="headerlink" title="一 . 概述"></a>一 . 概述</h3><p>支持向量机是一种分类算法，它可以找到潜在的最佳分割线。</p>
+<h3 id="二-所属分类"><a href="#二-所属分类" class="headerlink" title="二 . 所属分类"></a>二 . 所属分类</h3><p>支持向量机属于 监督学习。</p>
+<h3 id="三-Kernels"><a href="#三-Kernels" class="headerlink" title="三 . Kernels"></a>三 . Kernels</h3><h4 id="1-polynomial"><a href="#1-polynomial" class="headerlink" title="1 . polynomial"></a>1 . polynomial</h4><h4 id="2-rbf"><a href="#2-rbf" class="headerlink" title="2 . rbf"></a>2 . rbf</h4><h3 id="四-sklearn-支持向量机示例"><a href="#四-sklearn-支持向量机示例" class="headerlink" title="四 . sklearn 支持向量机示例"></a>四 . sklearn 支持向量机示例</h3><figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">from</span> sklearn.svm <span class="keyword">import</span> SVC</span><br><span class="line"><span class="title">from</span> sklearn.metrics <span class="keyword">import</span> accuracy_score</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">data</span> = np.asarray(<span class="title">pd</span>.<span class="title">read_csv</span>('<span class="title">data</span>.<span class="title">csv'</span>, <span class="title">header</span>=<span class="type">None</span>))</span></span><br><span class="line"></span><br><span class="line"><span class="type">X</span> = <span class="class"><span class="keyword">data</span>[:,0:2]</span></span><br><span class="line"><span class="title">y</span> = <span class="class"><span class="keyword">data</span>[:,2]</span></span><br><span class="line"></span><br><span class="line"><span class="title">model</span> = <span class="type">SVC</span>(kernel='rbf', gamma=<span class="number">27</span>)</span><br><span class="line"></span><br><span class="line"><span class="title">model</span>.fit(<span class="type">X</span>,y)</span><br><span class="line"></span><br><span class="line"><span class="title">y_pred</span> = model.predict(<span class="type">X</span>)</span><br><span class="line"></span><br><span class="line"><span class="title">acc</span> = accuracy_score(y, y_pred)</span><br></pre></td></tr></table></figure>
+        
+        <br />
+        <div id="comment-container">
+        </div>
+        <div id="disqus_thread"></div>
+
+        <div id="lv-container">
+        </div>
+
+    </div>
+</div>
+
+    </div>
+</div>
+
+
+<footer class="footer">
+    <ul class="list-inline text-center">
+        
+        
+
+        
+
+        
+
+        
+        <li>
+            <a target="_blank"  href="https://github.com/Fainle">
+                            <span class="fa-stack fa-lg">
+                                <i class="iconfont icon-github"></i>
+                            </span>
+            </a>
+        </li>
+        
+
+        
+
+    </ul>
+    
+    <p>
+        <span>/</span>
+        
+    </p>
+    
+    <p>
+        <span id="busuanzi_container_site_pv">
+            <span id="busuanzi_value_site_pv"></span>PV
+        </span>
+        <span id="busuanzi_container_site_uv">
+            <span id="busuanzi_value_site_uv"></span>UV
+        </span>
+        Created By <a href="https://hexo.io/">Hexo</a>  Theme <a href="https://github.com/aircloud/hexo-theme-aircloud">AirCloud</a></p>
+</footer><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+
+</body>
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+<script>
+    // We expose some of the variables needed by the front end
+    window.hexo_search_path = "search.json"
+    window.hexo_root = "/"
+    window.isPost = true
+</script>
+
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="/js/index.js"></script>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+</html>
