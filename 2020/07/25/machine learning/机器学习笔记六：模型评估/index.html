@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Fainle的博客">
+    <meta name="keyword"  content="github">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+        六：模型评估 (Model Evaluation Metrics) - Fainle的博客 | Fainle&#39;s Blog
+        
+    </title>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/aircloud.css">
+    <link rel="stylesheet" href="/css/gitment.css">
+    <!--<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">-->
+    <link href="//at.alicdn.com/t/font_620856_pl6z7sid89qkt9.css" rel="stylesheet" type="text/css">
+    <!-- ga & ba script hoook -->
+    <script></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body>
+
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="site-nav-toggle" id="site-nav-toggle">
+    <button>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+    </button>
+</div>
+
+<div class="index-about">
+    <i> 人生苦短，多思考，少编程 </i>
+</div>
+
+<div class="index-container">
+    
+    <div class="index-left">
+        
+<div class="nav" id="nav">
+    <div class="avatar-name">
+        <div class="avatar ">
+            <img src="/img/avatar.jpg" />
+        </div>
+        <div class="name">
+            <i>Fainle</i>
+        </div>
+    </div>
+    <div class="contents" id="nav-content">
+        <ul>
+            <li >
+                <a href="/">
+                    <i class="iconfont icon-shouye1"></i>
+                    <span>主页</span>
+                </a>
+            </li>
+            <li >
+                <a href="/tags">
+                    <i class="iconfont icon-biaoqian1"></i>
+                    <span>标签</span>
+                </a>
+            </li>
+            <li >
+                <a href="/archive">
+                    <i class="iconfont icon-guidang2"></i>
+                    <span>存档</span>
+                </a>
+            </li>
+            <li >
+                <a href="/about/">
+                    <i class="iconfont icon-guanyu2"></i>
+                    <span>关于</span>
+                </a>
+            </li>
+            
+            <li>
+                <a id="search">
+                    <i class="iconfont icon-sousuo1"></i>
+                    <span>搜索</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    
+        <div id="toc" class="toc-article">
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#一-概述"><span class="toc-text">一 . 概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二-Confusion-Matrix-混淆矩阵"><span class="toc-text">二 . Confusion Matrix (混淆矩阵)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三-Accuracy-准确度"><span class="toc-text">三 . Accuracy (准确度)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#四-Precision-（准确率"><span class="toc-text">四 . Precision （准确率)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#五-Recall-（召回率"><span class="toc-text">五 . Recall （召回率)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#六-F1-Score"><span class="toc-text">六 . F1 Score</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#七-ROC"><span class="toc-text">七 . ROC</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#八-sklearn-例子"><span class="toc-text">八 . sklearn 例子</span></a></li></ol>
+</div>
+    
+</div>
+
+
+<div class="search-field" id="search-field">
+    <div class="search-container">
+        <div class="search-input">
+            <span id="esc-search"> <i class="icon-fanhui iconfont"></i></span>
+            <input id="search-input"/>
+            <span id="begin-search">搜索</span>
+        </div>
+        <div class="search-result-container" id="search-result-container">
+
+        </div>
+    </div>
+</div>
+
+        <div class="index-about-mobile">
+            <i> 人生苦短，多思考，少编程 </i>
+        </div>
+    </div>
+    
+    <div class="index-middle">
+        <!-- Main Content -->
+        
+
+
+<div class="post-container">
+    <div class="post-title">
+        六：模型评估 (Model Evaluation Metrics)
+    </div>
+
+    <div class="post-meta">
+        <span class="attr">发布于：<span>2020-07-25 10:00:00</span></span>
+        
+        <span class="attr">标签：/
+        
+        <a class="tag" href="/tags/#机器学习笔记" title="机器学习笔记">机器学习笔记</a>
+        <span>/</span>
+        
+        
+        </span>
+        <span class="attr">访问：<span id="busuanzi_value_page_pv"></span>
+</span>
+</span>
+    </div>
+    <div class="post-content ">
+        <h3 id="一-概述"><a href="#一-概述" class="headerlink" title="一 . 概述"></a>一 . 概述</h3><p>模型评估是通过一系列评估方法评估模型的好坏。</p>
+<h3 id="二-Confusion-Matrix-混淆矩阵"><a href="#二-Confusion-Matrix-混淆矩阵" class="headerlink" title="二 . Confusion Matrix (混淆矩阵)"></a>二 . Confusion Matrix (混淆矩阵)</h3><p>在机器学习领域和统计分类问题中，混淆矩阵是可视化工具，特别用于监督学习，在无监督学习一般叫做匹配矩阵。矩阵的每一列代表一个类的实例预测，而每一行表示一个实际的类的实例。之所以如此命名，是因为通过这个矩阵可以方便地看出机器是否将两个不同的类混淆了。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>真</th>
+<th>假</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>真</td>
+<td>真真 = true</td>
+<td>真假 = false</td>
+</tr>
+<tr>
+<td>假</td>
+<td>假真 = false</td>
+<td>假假 = true</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="三-Accuracy-准确度"><a href="#三-Accuracy-准确度" class="headerlink" title="三 . Accuracy (准确度)"></a>三 . Accuracy (准确度)</h3><script type="math/tex; mode=display">acc = \frac{真真 + 假假}{总数}</script><h3 id="四-Precision-（准确率"><a href="#四-Precision-（准确率" class="headerlink" title="四 . Precision （准确率)"></a>四 . Precision （准确率)</h3><script type="math/tex; mode=display">precision = \frac{真真}{真真 + 假真}</script><p>查得更准</p>
+<h3 id="五-Recall-（召回率"><a href="#五-Recall-（召回率" class="headerlink" title="五 . Recall （召回率)"></a>五 . Recall （召回率)</h3><script type="math/tex; mode=display">recall = \frac{真真}{真真 + 真假 }</script><p>查得更全</p>
+<p>一般情况下 准确率 和 召回率 越高越好，但真实情况需要根据业务的情况。</p>
+<h3 id="六-F1-Score"><a href="#六-F1-Score" class="headerlink" title="六 . F1 Score"></a>六 . F1 Score</h3><script type="math/tex; mode=display">f1 = 2\frac{precision * recall}{precision + recall }</script><p>更偏向于那个指标。</p>
+<h3 id="七-ROC"><a href="#七-ROC" class="headerlink" title="七 . ROC"></a>七 . ROC</h3><p>roc 越大模型越好</p>
+<h3 id="八-sklearn-例子"><a href="#八-sklearn-例子" class="headerlink" title="八 . sklearn 例子"></a>八 . sklearn 例子</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</span><br><span class="line"><span class="keyword">from</span> sklearn.tree <span class="keyword">import</span> DecisionTreeClassifier</span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> accuracy_score, precision_score, recall_score, f1_score, roc_curve</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">data = np.asarray(pd.read_csv(<span class="string">'data.csv'</span>))</span><br><span class="line">x = data[:, <span class="number">0</span>:<span class="number">2</span>]</span><br><span class="line">y = data[:, <span class="number">2</span>]</span><br><span class="line"></span><br><span class="line">x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=<span class="number">0.25</span>, random_state=<span class="number">42</span>)</span><br><span class="line"></span><br><span class="line">model = DecisionTreeClassifier()</span><br><span class="line">model.fit(x_train, y_train)</span><br><span class="line">y_pred = model.predict(x_test)</span><br><span class="line"></span><br><span class="line">acc = accuracy_score(y_test, y_pred)</span><br><span class="line">precision_score = precision_score(y_test, y_pred)</span><br><span class="line">recall_score = recall_score(y_test, y_pred)</span><br><span class="line">f1_score = f1_score(y_test, y_pred)</span><br><span class="line">roc_curve = roc_curve(y_test, y_pred)</span><br><span class="line"></span><br><span class="line">print(<span class="string">'acc: '</span>, acc)</span><br><span class="line">print(<span class="string">'precision_score: '</span>, precision_score)</span><br><span class="line">print(<span class="string">'recall_score: '</span>, recall_score)</span><br><span class="line">print(<span class="string">'f1_score: '</span>, f1_score)</span><br><span class="line">print(<span class="string">'roc_curve: '</span>, roc_curve)</span><br></pre></td></tr></table></figure>
+
+        
+        <br />
+        <div id="comment-container">
+        </div>
+        <div id="disqus_thread"></div>
+
+        <div id="lv-container">
+        </div>
+
+    </div>
+</div>
+
+    </div>
+</div>
+
+
+<footer class="footer">
+    <ul class="list-inline text-center">
+        
+        
+
+        
+
+        
+
+        
+        <li>
+            <a target="_blank"  href="https://github.com/Fainle">
+                            <span class="fa-stack fa-lg">
+                                <i class="iconfont icon-github"></i>
+                            </span>
+            </a>
+        </li>
+        
+
+        
+        <li>
+            <a target="_blank"  href="https://www.linkedin.com/in/Fainle">
+                            <span class="fa-stack fa-lg">
+                                <i class="iconfont icon-linkedin"></i>
+                            </span>
+            </a>
+        </li>
+        
+
+    </ul>
+    
+    <p>
+        <span>/</span>
+        
+        <span><a href="https://fainle.github.io">fainle</a></span>
+        <span>/</span>
+        
+    </p>
+    
+    <p>
+        <span id="busuanzi_container_site_pv">
+            <span id="busuanzi_value_site_pv"></span>PV
+        </span>
+        <span id="busuanzi_container_site_uv">
+            <span id="busuanzi_value_site_uv"></span>UV
+        </span>
+        Created By <a href="https://hexo.io/">Hexo</a>  Theme <a href="https://github.com/aircloud/hexo-theme-aircloud">AirCloud</a></p>
+</footer><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+
+</body>
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+<script>
+    // We expose some of the variables needed by the front end
+    window.hexo_search_path = "search.json"
+    window.hexo_root = "/"
+    window.isPost = true
+</script>
+
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="/js/index.js"></script>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+</html>
