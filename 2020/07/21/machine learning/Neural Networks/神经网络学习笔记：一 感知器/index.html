@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Fainle的博客">
+    <meta name="keyword"  content="github">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+        一：感知器 (Perceptrons) - Fainle的博客 | Fainle&#39;s Blog
+        
+    </title>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/aircloud.css">
+    <link rel="stylesheet" href="/css/gitment.css">
+    <!--<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">-->
+    <link href="//at.alicdn.com/t/font_620856_pl6z7sid89qkt9.css" rel="stylesheet" type="text/css">
+    <!-- ga & ba script hoook -->
+    <script></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body>
+
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="site-nav-toggle" id="site-nav-toggle">
+    <button>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+    </button>
+</div>
+
+<div class="index-about">
+    <i> 人生苦短，多思考，少编程 </i>
+</div>
+
+<div class="index-container">
+    
+    <div class="index-left">
+        
+<div class="nav" id="nav">
+    <div class="avatar-name">
+        <div class="avatar ">
+            <img src="/img/avatar.jpg" />
+        </div>
+        <div class="name">
+            <i>Fainle</i>
+        </div>
+    </div>
+    <div class="contents" id="nav-content">
+        <ul>
+            <li >
+                <a href="/">
+                    <i class="iconfont icon-shouye1"></i>
+                    <span>主页</span>
+                </a>
+            </li>
+            <li >
+                <a href="/tags">
+                    <i class="iconfont icon-biaoqian1"></i>
+                    <span>标签</span>
+                </a>
+            </li>
+            <li >
+                <a href="/archive">
+                    <i class="iconfont icon-guidang2"></i>
+                    <span>存档</span>
+                </a>
+            </li>
+            <li >
+                <a href="/about/">
+                    <i class="iconfont icon-guanyu2"></i>
+                    <span>关于</span>
+                </a>
+            </li>
+            
+            <li>
+                <a id="search">
+                    <i class="iconfont icon-sousuo1"></i>
+                    <span>搜索</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    
+        <div id="toc" class="toc-article">
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#一-概述"><span class="toc-text">一 . 概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二-定义"><span class="toc-text">二 . 定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三-作为逻辑运算符的感知器"><span class="toc-text">三 .作为逻辑运算符的感知器</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-AND-感知器"><span class="toc-text">1 . AND 感知器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-OR-感知器"><span class="toc-text">2 . OR 感知器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-NOT-感知器"><span class="toc-text">3 . NOT 感知器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-XOR-感知器"><span class="toc-text">4 . XOR 感知器</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#四-感知器算法"><span class="toc-text">四 . 感知器算法</span></a></li></ol>
+</div>
+    
+</div>
+
+
+<div class="search-field" id="search-field">
+    <div class="search-container">
+        <div class="search-input">
+            <span id="esc-search"> <i class="icon-fanhui iconfont"></i></span>
+            <input id="search-input"/>
+            <span id="begin-search">搜索</span>
+        </div>
+        <div class="search-result-container" id="search-result-container">
+
+        </div>
+    </div>
+</div>
+
+        <div class="index-about-mobile">
+            <i> 人生苦短，多思考，少编程 </i>
+        </div>
+    </div>
+    
+    <div class="index-middle">
+        <!-- Main Content -->
+        
+
+
+<div class="post-container">
+    <div class="post-title">
+        一：感知器 (Perceptrons)
+    </div>
+
+    <div class="post-meta">
+        <span class="attr">发布于：<span>2020-07-21 00:00</span></span>
+        
+        <span class="attr">标签：/
+        
+        <a class="tag" href="/tags/#深度学习笔记" title="深度学习笔记">深度学习笔记</a>
+        <span>/</span>
+        
+        
+        </span>
+        <span class="attr">访问：<span id="busuanzi_value_page_pv"></span>
+</span>
+</span>
+    </div>
+    <div class="post-content ">
+        <h3 id="一-概述"><a href="#一-概述" class="headerlink" title="一 . 概述"></a>一 . 概述</h3><p>感知器是一种人工神经网络。它可以被视为一种最简单形式的前馈神经网络，是一种二元线性分类器。</p>
+<h3 id="二-定义"><a href="#二-定义" class="headerlink" title="二 . 定义"></a>二 . 定义</h3><p>感知器使用特征向量来表示的前馈神经网络。</p>
+<script type="math/tex; mode=display">
+f(x) = 
+\begin{cases} 
+1\quad if w.x + b > 0 \\ 
+0\quad else
+\end{cases}</script><p>w是实数的表示权重的向量，<code>w.x</code>是点积。<code>b</code>是偏置，一个不依赖于任何输入值的常数。偏置可以认为是激励函数的偏移量，或者给神经元一个基础活跃等级。</p>
+<h3 id="三-作为逻辑运算符的感知器"><a href="#三-作为逻辑运算符的感知器" class="headerlink" title="三 .作为逻辑运算符的感知器"></a>三 .作为逻辑运算符的感知器</h3><p>这种感知器 可以执行 <code>and</code> <code>or</code> 和 <code>not</code> 运算。</p>
+<p>这种感知器有2个输入值为{true, false} 类似 {1, 0} 和 一个输出 <code>yes</code> or <code>no</code>.</p>
+<h4 id="1-AND-感知器"><a href="#1-AND-感知器" class="headerlink" title="1 . AND 感知器"></a>1 . AND 感知器</h4><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>IN</th>
+<th>IN</th>
+<th>OUT</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>no</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>no</td>
+</tr>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>no</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="2-OR-感知器"><a href="#2-OR-感知器" class="headerlink" title="2 . OR 感知器"></a>2 . OR 感知器</h4><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>IN</th>
+<th>IN</th>
+<th>OUT</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>no</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="3-NOT-感知器"><a href="#3-NOT-感知器" class="headerlink" title="3 . NOT 感知器"></a>3 . NOT 感知器</h4><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>IN</th>
+<th>OUT</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>0</td>
+<td>no</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="4-XOR-感知器"><a href="#4-XOR-感知器" class="headerlink" title="4 . XOR 感知器"></a>4 . XOR 感知器</h4><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>IN</th>
+<th>IN</th>
+<th>OUT</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>no</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>no</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="四-感知器算法"><a href="#四-感知器算法" class="headerlink" title="四 . 感知器算法"></a>四 . 感知器算法</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line">np.random.seed(<span class="number">42</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">stepFunction</span><span class="params">(t)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> t &gt;= <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 设置函数</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">prediction</span><span class="params">(X, W, b)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> stepFunction((np.matmul(X,W)+b)[<span class="number">0</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment">## 计算新权重</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">perceptronStep</span><span class="params">(X, y, W, b, learn_rate = <span class="number">0.01</span>)</span>:</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(X)):</span><br><span class="line">        y_hat = prediction(X[i],W,b)</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> y[i] - y_hat == <span class="number">1</span>:</span><br><span class="line">            W[<span class="number">0</span>] += X[i][<span class="number">0</span>]*learn_rate</span><br><span class="line">            W[<span class="number">1</span>] += X[i][<span class="number">1</span>]*learn_rate</span><br><span class="line">        <span class="keyword">elif</span> y[i] - y_hat == <span class="number">-1</span>:</span><br><span class="line">            W[<span class="number">0</span>] -= X[i][<span class="number">0</span>]*learn_rate</span><br><span class="line">            W[<span class="number">1</span>] -= X[i][<span class="number">1</span>]*learn_rate</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> W, b</span><br><span class="line">    </span><br><span class="line"><span class="comment">## 感知器算法</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">trainPerceptronAlgorithm</span><span class="params">(X, y, learn_rate = <span class="number">0.01</span>, num_epochs = <span class="number">25</span>)</span>:</span></span><br><span class="line">    x_min, x_max = min(X.T[<span class="number">0</span>]), max(X.T[<span class="number">0</span>])</span><br><span class="line">    y_min, y_max = min(X.T[<span class="number">1</span>]), max(X.T[<span class="number">1</span>])</span><br><span class="line">    W = np.array(np.random.rand(<span class="number">2</span>,<span class="number">1</span>))</span><br><span class="line">    b = np.random.rand(<span class="number">1</span>)[<span class="number">0</span>] + x_max</span><br><span class="line">    <span class="comment"># These are the solution lines that get plotted below.</span></span><br><span class="line">    boundary_lines = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(num_epochs):</span><br><span class="line">        <span class="comment"># In each epoch, we apply the perceptron step.</span></span><br><span class="line">        W, b = perceptronStep(X, y, W, b, learn_rate)</span><br><span class="line">        boundary_lines.append((-W[<span class="number">0</span>]/W[<span class="number">1</span>], -b/W[<span class="number">1</span>]))</span><br><span class="line">    <span class="keyword">return</span> boundary_lines</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">data = np.asarray(pd.read_csv(<span class="string">'data.csv'</span>))</span><br><span class="line">x = data[:, <span class="number">0</span>:data.shape[<span class="number">1</span>]<span class="number">-1</span>]</span><br><span class="line">y = data[:, <span class="number">-1</span>]</span><br><span class="line"></span><br><span class="line">res = trainPerceptronAlgorithm(x, y)</span><br></pre></td></tr></table></figure>
+
+        
+        <br />
+        <div id="comment-container">
+        </div>
+        <div id="disqus_thread"></div>
+
+        <div id="lv-container">
+        </div>
+
+    </div>
+</div>
+
+    </div>
+</div>
+
+
+<footer class="footer">
+    <ul class="list-inline text-center">
+        
+        
+
+        
+
+        
+
+        
+        <li>
+            <a target="_blank"  href="https://github.com/Fainle">
+                            <span class="fa-stack fa-lg">
+                                <i class="iconfont icon-github"></i>
+                            </span>
+            </a>
+        </li>
+        
+
+        
+        <li>
+            <a target="_blank"  href="https://www.linkedin.com/in/Fainle">
+                            <span class="fa-stack fa-lg">
+                                <i class="iconfont icon-linkedin"></i>
+                            </span>
+            </a>
+        </li>
+        
+
+    </ul>
+    
+    <p>
+        <span>/</span>
+        
+        <span><a href="https://fainle.github.io">fainle</a></span>
+        <span>/</span>
+        
+    </p>
+    
+    <p>
+        <span id="busuanzi_container_site_pv">
+            <span id="busuanzi_value_site_pv"></span>PV
+        </span>
+        <span id="busuanzi_container_site_uv">
+            <span id="busuanzi_value_site_uv"></span>UV
+        </span>
+        Created By <a href="https://hexo.io/">Hexo</a>  Theme <a href="https://github.com/aircloud/hexo-theme-aircloud">AirCloud</a></p>
+</footer><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+
+</body>
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+<script>
+    // We expose some of the variables needed by the front end
+    window.hexo_search_path = "search.json"
+    window.hexo_root = "/"
+    window.isPost = true
+</script>
+
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="/js/index.js"></script>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+    <script>
+        /**
+         *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+         *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+        */
+        if( '' || '')
+        var disqus_config = function () {
+            this.page.url = '';  // Replace PAGE_URL with your page's canonical URL variable
+            this.page.identifier = ''; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        };
+
+        (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://fainle.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+
+
+
+</html>
