@@ -11,7 +11,7 @@
 
     <title>
         
-        Fainle的博客 | Fainle&#39;s Blog
+        五：逻辑回归（Logistic Regression） - Fainle的博客 | Fainle&#39;s Blog
         
     </title>
 
@@ -53,7 +53,7 @@
     </div>
     <div class="contents" id="nav-content">
         <ul>
-            <li  class=active >
+            <li >
                 <a href="/">
                     <i class="iconfont icon-shouye1"></i>
                     <span>主页</span>
@@ -88,6 +88,10 @@
         </ul>
     </div>
     
+        <div id="toc" class="toc-article">
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-计算方式"><span class="toc-text">1 . 计算方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-计算步骤"><span class="toc-text">1 . 计算步骤</span></a></li></ol>
+</div>
+    
 </div>
 
 
@@ -112,117 +116,53 @@
     <div class="index-middle">
         <!-- Main Content -->
         
-<div class="post-preview-container" style="min-height: 720px">
-    
-    <div class="post-preview">
-        <div class="post-time">2020-07-24</div>
-        <div class="post-info">
-            <a href="/2020/07/24/machine learning/机器学习笔记四：支持向量机/">
-                <h3>
-                    四：支持向量机 (Support Vector Machine)
-                </h3>
-            </a>
-            <p>
-                
-                <span>/</span>
-                
-                <a class="tag" href="/tags/#统计机器学习笔记" title="统计机器学习笔记">统计机器学习笔记</a>
-                <span>/</span>
-                
-                
-            </p>
-        </div>
+
+
+<div class="post-container">
+    <div class="post-title">
+        五：逻辑回归（Logistic Regression）
     </div>
-    
-    <div class="post-preview">
-        <div class="post-time">2020-07-24</div>
-        <div class="post-info">
-            <a href="/2020/07/24/machine learning/机器学习练习项目一：垃圾邮件分类/">
-                <h3>
-                    一：朴素贝叶斯垃圾邮件分类
-                </h3>
-            </a>
-            <p>
-                
-                <span>/</span>
-                
-                <a class="tag" href="/tags/#机器学习练习项目" title="机器学习练习项目">机器学习练习项目</a>
-                <span>/</span>
-                
-                
-            </p>
-        </div>
+
+    <div class="post-meta">
+        <span class="attr">发布于：<span>2020-07-28 11:15</span></span>
+        
+        <span class="attr">标签：/
+        
+        <a class="tag" href="/tags/#深度学习笔记" title="深度学习笔记">深度学习笔记</a>
+        <span>/</span>
+        
+        
+        </span>
+        <span class="attr">访问：<span id="busuanzi_value_page_pv"></span>
+</span>
+</span>
     </div>
-    
-    <div class="post-preview">
-        <div class="post-time">2020-07-23</div>
-        <div class="post-info">
-            <a href="/2020/07/23/machine learning/机器学习笔记三：朴素贝叶斯/">
-                <h3>
-                    三：朴素贝叶斯 (Naive Bayes)
-                </h3>
-            </a>
-            <p>
-                
-                <span>/</span>
-                
-                <a class="tag" href="/tags/#统计机器学习笔记" title="统计机器学习笔记">统计机器学习笔记</a>
-                <span>/</span>
-                
-                
-            </p>
+    <div class="post-content ">
+        <h3 id="1-计算方式"><a href="#1-计算方式" class="headerlink" title="1 . 计算方式"></a>1 . 计算方式</h3><p>1 如果 y = 1</p>
+<script type="math/tex; mode=display">P(1) = \hat{y}</script><p>错误为</p>
+<script type="math/tex; mode=display">error = -log(\hat{y})</script><p>2 如果 y = 0</p>
+<script type="math/tex; mode=display">P(0) = 1 - \hat{y}</script><p>错误为</p>
+<script type="math/tex; mode=display">error = -log(1-\hat{y})</script><p>错误为</p>
+<script type="math/tex; mode=display">error = -(1-y)(\log(1-\hat{y})) - y\log(\hat{y})</script><p>损失函数为</p>
+<script type="math/tex; mode=display">
+Error Func = -\frac{1}{m}\sum_{i=1}^m(1-y_i)(\log(1-\hat{y}_{i}) + y_{i}\log(\hat{y}_i)</script><p>其中 </p>
+<script type="math/tex; mode=display">\hat{y} = \sigma(Wx^{(i)} + b)</script><p>最终得到</p>
+<script type="math/tex; mode=display">
+E(W, b) = -\frac{1}{m}\sum_{i=1}^m(1- y_i )(\log(1- \sigma(Wx^{(i)} + b) ) + y_{i}\log( \sigma(Wx^{(i)} + b) )</script><h3 id="1-计算步骤"><a href="#1-计算步骤" class="headerlink" title="1 . 计算步骤"></a>1 . 计算步骤</h3><p>1 随机w1…wn 和 b 得到一条线段（函数）</p>
+<p>2 对每个点按照学习率 计算得到新的 w1…wn 和 b </p>
+<p>3 重复过程让 错误率最小 </p>
+
+        
+        <br />
+        <div id="comment-container">
         </div>
-    </div>
-    
-    <div class="post-preview">
-        <div class="post-time">2020-07-23</div>
-        <div class="post-info">
-            <a href="/2020/07/23/machine learning/机器学习笔记二：决策树/">
-                <h3>
-                    二：决策树 (Decision Trees)
-                </h3>
-            </a>
-            <p>
-                
-                <span>/</span>
-                
-                <a class="tag" href="/tags/#统计机器学习笔记" title="统计机器学习笔记">统计机器学习笔记</a>
-                <span>/</span>
-                
-                
-            </p>
+        <div id="disqus_thread"></div>
+
+        <div id="lv-container">
         </div>
+
     </div>
-    
-    <div class="post-preview">
-        <div class="post-time">2020-07-21</div>
-        <div class="post-info">
-            <a href="/2020/07/21/machine learning/机器学习笔记一：线性回归/">
-                <h3>
-                    一：线性回归 (Linear Regression)
-                </h3>
-            </a>
-            <p>
-                
-                <span>/</span>
-                
-                <a class="tag" href="/tags/#统计机器学习笔记" title="统计机器学习笔记">统计机器学习笔记</a>
-                <span>/</span>
-                
-                
-            </p>
-        </div>
-    </div>
-    
 </div>
-<ul class="pager">
-    
-    <li class="previous">
-        <a href="/">&larr; Newer Posts</a>
-    </li>
-    
-    
-</ul>
 
     </div>
 </div>
@@ -287,13 +227,32 @@
     // We expose some of the variables needed by the front end
     window.hexo_search_path = "search.json"
     window.hexo_root = "/"
-    window.isPost = false
+    window.isPost = true
 </script>
 
 <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 <script src="/js/index.js"></script>
 <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
+
+    <script>
+        /**
+         *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+         *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+        */
+        if( '' || '')
+        var disqus_config = function () {
+            this.page.url = '';  // Replace PAGE_URL with your page's canonical URL variable
+            this.page.identifier = ''; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        };
+
+        (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://fainle.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
 
 
 
