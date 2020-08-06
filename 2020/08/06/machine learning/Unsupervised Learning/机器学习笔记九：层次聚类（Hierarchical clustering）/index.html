@@ -11,7 +11,7 @@
 
     <title>
         
-        八：K-平均算法 (K-Means) - Fainle的博客 | Fainle&#39;s Blog
+        九：层次聚类（Hierarchical clustering） - Fainle的博客 | Fainle&#39;s Blog
         
     </title>
 
@@ -89,7 +89,7 @@
     </div>
     
         <div id="toc" class="toc-article">
-    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#一-概述"><span class="toc-text">一 . 概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二-工作原理"><span class="toc-text">二 . 工作原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三-sklearn-示例"><span class="toc-text">三 . sklearn 示例</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#一-概述"><span class="toc-text">一 . 概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二-算法分类"><span class="toc-text">二 . 算法分类</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-SingleLinkage"><span class="toc-text">1. SingleLinkage</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-CompleteLinkage"><span class="toc-text">2. CompleteLinkage</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-AverageLinkage"><span class="toc-text">3. AverageLinkage</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三-优缺点"><span class="toc-text">三 . 优缺点</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-优点"><span class="toc-text">1. 优点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-缺点"><span class="toc-text">2. 缺点</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#四-sklearn-示例"><span class="toc-text">四 . sklearn 示例</span></a></li></ol>
 </div>
     
 </div>
@@ -120,11 +120,11 @@
 
 <div class="post-container">
     <div class="post-title">
-        八：K-平均算法 (K-Means)
+        九：层次聚类（Hierarchical clustering）
     </div>
 
     <div class="post-meta">
-        <span class="attr">发布于：<span>2020-08-05 00:00</span></span>
+        <span class="attr">发布于：<span>2020-08-06 10:00</span></span>
         
         <span class="attr">标签：/
         
@@ -144,20 +144,27 @@
 </span>
     </div>
     <div class="post-content ">
-        <h3 id="一-概述"><a href="#一-概述" class="headerlink" title="一 . 概述"></a>一 . 概述</h3><p>K-Means算法用于对各种数据进行聚类。</p>
-<p>其中 k 代表具有的族类数</p>
+        <h3 id="一-概述"><a href="#一-概述" class="headerlink" title="一 . 概述"></a>一 . 概述</h3><p>层次聚类是一种聚类分析方法，旨在构建聚类的层次结构。<br>对于层次聚类策略一般分为两种类型： </p>
 <ol>
-<li>相似类型的书籍或作者</li>
-<li>类似的电影</li>
-<li>类似的音乐</li>
-<li>类似兴趣的客户</li>
+<li>自下而上：</li>
 </ol>
-<h3 id="二-工作原理"><a href="#二-工作原理" class="headerlink" title="二 . 工作原理"></a>二 . 工作原理</h3><ol>
-<li>随机设置每个K分类点</li>
-<li>将每个点分给每个最近的K分类点</li>
-<li>移动K到分类的点的中心区域</li>
+<p>每个观测值都从其自己的聚类开始，随着层次结构的上升，聚类对合并在一起。</p>
+<ol>
+<li>自上而下：</li>
 </ol>
-<h3 id="三-sklearn-示例"><a href="#三-sklearn-示例" class="headerlink" title="三 . sklearn 示例"></a>三 . sklearn 示例</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> mpl_toolkits.mplot3d <span class="keyword">import</span> Axes3D</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> sklearn.cluster <span class="keyword">import</span> KMeans</span><br><span class="line"><span class="keyword">from</span> sklearn.datasets <span class="keyword">import</span> make_blobs</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> IPython <span class="keyword">import</span> display</span><br><span class="line"></span><br><span class="line">%matplotlib inline</span><br><span class="line"></span><br><span class="line">plt.rcParams[<span class="string">'figure.figsize'</span>] = [<span class="number">16</span>, <span class="number">9</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成聚族随机数据 其中1000个点 10个特征，10个中心点</span></span><br><span class="line">data, y = make_blobs(n_samples=<span class="number">1000</span>, n_features=<span class="number">10</span>, centers=<span class="number">10</span>, random_state=<span class="number">42</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 预测最佳的点</span></span><br><span class="line">socres = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">12</span>):</span><br><span class="line">    kmeans = KMeans(i)</span><br><span class="line">    model = kmeans.fit(data)</span><br><span class="line">    socre = model.score(data)</span><br><span class="line">    socres.append(abs(socre))</span><br><span class="line">    </span><br><span class="line">x_plot_data = list(range(<span class="number">1</span>, <span class="number">12</span>))</span><br><span class="line">plt.plot(x_plot_data, socres)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3D可视化</span></span><br><span class="line">kmeans2 = KMeans(<span class="number">10</span>)</span><br><span class="line">model2 = kmeans2.fit(data)</span><br><span class="line">labels = model2.predict(data)</span><br><span class="line"></span><br><span class="line">fig = plt.figure()</span><br><span class="line">ax = Axes3D(fig)</span><br><span class="line">ax.scatter(data[:, <span class="number">0</span>], data[:, <span class="number">1</span>], data[:, <span class="number">2</span>], c=labels, cmap=<span class="string">'tab10'</span>)</span><br></pre></td></tr></table></figure>
+<p>所有观测都从一个群集开始，并且随着层次向下移动，拆分将递归执行。</p>
+<h3 id="二-算法分类"><a href="#二-算法分类" class="headerlink" title="二 . 算法分类"></a>二 . 算法分类</h3><h4 id="1-SingleLinkage"><a href="#1-SingleLinkage" class="headerlink" title="1. SingleLinkage"></a>1. SingleLinkage</h4><p>取两个类中最近的两个样本之间的距离作为两个集合的距离，即：最近的两个样本之间的距离越小，</p>
+<h4 id="2-CompleteLinkage"><a href="#2-CompleteLinkage" class="headerlink" title="2. CompleteLinkage"></a>2. CompleteLinkage</h4><p>取两个集合距离最远的两个点的距离作为两个集合的距离，其效果也刚好相反，限制非常大。</p>
+<h4 id="3-AverageLinkage"><a href="#3-AverageLinkage" class="headerlink" title="3. AverageLinkage"></a>3. AverageLinkage</h4><p>两个集合中的点两两距离全部放在一起求平均值，相应的能得到一点合适的结果。</p>
+<h3 id="三-优缺点"><a href="#三-优缺点" class="headerlink" title="三 . 优缺点"></a>三 . 优缺点</h3><h4 id="1-优点"><a href="#1-优点" class="headerlink" title="1. 优点"></a>1. 优点</h4><ol>
+<li>层次表达的结构信息丰富</li>
+<li>数据容易可视化</li>
+</ol>
+<h4 id="2-缺点"><a href="#2-缺点" class="headerlink" title="2. 缺点"></a>2. 缺点</h4><ol>
+<li>对噪音和离群值很敏感</li>
+<li>计算量很大</li>
+</ol>
+<h3 id="四-sklearn-示例"><a href="#四-sklearn-示例" class="headerlink" title="四 . sklearn 示例"></a>四 . sklearn 示例</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> datasets, cluster</span><br><span class="line"><span class="keyword">from</span> scipy.cluster.hierarchy <span class="keyword">import</span> dendrogram, ward, single</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">x = datasets.load_iris().data[:<span class="number">10</span>]</span><br><span class="line">clust = cluster.AgglomerativeClustering(n_clusters=<span class="number">2</span>, linkage=<span class="string">'ward'</span>)  <span class="comment"># ward = 离平方差</span></span><br><span class="line">labels = clust.fit_predict(x)</span><br><span class="line"></span><br><span class="line">linkage_matrix = ward(x)</span><br><span class="line">dendrogram(linkage_matrix)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
         
         <br />
         <div id="comment-container">
