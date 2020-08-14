@@ -11,7 +11,7 @@
 
     <title>
         
-        Fainle的博客 | Fainle&#39;s Blog
+        三：单变量数据探索 - Fainle的博客 | Fainle&#39;s Blog
         
     </title>
 
@@ -53,7 +53,7 @@
     </div>
     <div class="contents" id="nav-content">
         <ul>
-            <li  class=active >
+            <li >
                 <a href="/">
                     <i class="iconfont icon-shouye1"></i>
                     <span>主页</span>
@@ -88,6 +88,10 @@
         </ul>
     </div>
     
+        <div id="toc" class="toc-article">
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#一-简介"><span class="toc-text">一 . 简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二-bar-charts"><span class="toc-text">二 . bar charts</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三-python-实现"><span class="toc-text">三 . python 实现</span></a></li></ol>
+</div>
+    
 </div>
 
 
@@ -112,97 +116,50 @@
     <div class="index-middle">
         <!-- Main Content -->
         
-<div class="post-preview-container" style="min-height: 720px">
-    
-    <div class="post-preview">
-        <div class="post-time">2020-07-24</div>
-        <div class="post-info">
-            <a href="/2020/07/24/machine learning/机器学习练习项目一：垃圾邮件分类/">
-                <h3>
-                    一：朴素贝叶斯垃圾邮件分类
-                </h3>
-            </a>
-            <p>
-                
-                <span>/</span>
-                
-                <a class="tag" href="/tags/#机器学习练习项目" title="机器学习练习项目">机器学习练习项目</a>
-                <span>/</span>
-                
-                
-            </p>
-        </div>
+
+
+<div class="post-container">
+    <div class="post-title">
+        三：单变量数据探索
     </div>
-    
-    <div class="post-preview">
-        <div class="post-time">2020-07-23</div>
-        <div class="post-info">
-            <a href="/2020/07/23/machine learning/机器学习笔记三：朴素贝叶斯/">
-                <h3>
-                    三：朴素贝叶斯 (Naive Bayes)
-                </h3>
-            </a>
-            <p>
-                
-                <span>/</span>
-                
-                <a class="tag" href="/tags/#统计机器学习笔记" title="统计机器学习笔记">统计机器学习笔记</a>
-                <span>/</span>
-                
-                
-            </p>
-        </div>
+
+    <div class="post-meta">
+        <span class="attr">发布于：<span>2020-08-13 09:30</span></span>
+        
+        <span class="attr">标签：/
+        
+        <a class="tag" href="/tags/#数据可视化" title="数据可视化">数据可视化</a>
+        <span>/</span>
+        
+        
+        </span>
+        <span class="attr">访问：<span id="busuanzi_value_page_pv"></span>
+</span>
+</span>
     </div>
-    
-    <div class="post-preview">
-        <div class="post-time">2020-07-23</div>
-        <div class="post-info">
-            <a href="/2020/07/23/machine learning/机器学习笔记二：决策树/">
-                <h3>
-                    二：决策树 (Decision Trees)
-                </h3>
-            </a>
-            <p>
-                
-                <span>/</span>
-                
-                <a class="tag" href="/tags/#统计机器学习笔记" title="统计机器学习笔记">统计机器学习笔记</a>
-                <span>/</span>
-                
-                
-            </p>
+    <div class="post-content ">
+        <h3 id="一-简介"><a href="#一-简介" class="headerlink" title="一 . 简介"></a>一 . 简介</h3><p>可视化单一变量，一次只研究一个变量。</p>
+<h3 id="二-bar-charts"><a href="#二-bar-charts" class="headerlink" title="二 . bar charts"></a>二 . bar charts</h3><p>要研究定型变量的分布一般选用柱状图。</p>
+<ol>
+<li>x 代表分类</li>
+<li>y 代表频率（数量）</li>
+<li>一般基线从0开始，以免数据失真</li>
+<li>如果分类没有顺序（如 男女） 则按 y 高低排序比较好</li>
+<li>如果分类有顺序（如 月份），则保持原状</li>
+<li>如果分类很多或名字很长，可以选择90度 用水平柱状图更好。（如编程语言的使用率对比）</li>
+</ol>
+<h3 id="三-python-实现"><a href="#三-python-实现" class="headerlink" title="三 . python 实现"></a>三 . python 实现</h3><figure class="highlight xl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> seaborn <span class="keyword">as</span> sns</span><br><span class="line"></span><br><span class="line">%matplotlib inline</span><br><span class="line"><span class="keyword">import</span> matplotlib</span><br><span class="line"></span><br><span class="line">df = pd.read_csv(<span class="string">'***.csv'</span>)</span><br><span class="line">sns.countplot(<span class="keyword">data</span>=df, x=<span class="string">'status'</span>); # ;好可隐藏图标内存地址</span><br><span class="line"></span><br><span class="line">base_color = sns.color_palette()[<span class="number">0</span>] #获取颜色</span><br><span class="line">category_index = df[<span class="string">'category'</span>].value_counts().index #获取排序索引</span><br><span class="line"></span><br><span class="line">sns.countplot(<span class="keyword">data</span>=df, x=<span class="string">'category'</span>, <span class="built_in">color</span>=base_color, order=category_index); # x 换成 y 则为水平柱状图</span><br></pre></td></tr></table></figure>
+        
+        <br />
+        <div id="comment-container">
         </div>
-    </div>
-    
-    <div class="post-preview">
-        <div class="post-time">2020-07-21</div>
-        <div class="post-info">
-            <a href="/2020/07/21/machine learning/机器学习笔记一：线性回归/">
-                <h3>
-                    一：线性回归 (Linear Regression)
-                </h3>
-            </a>
-            <p>
-                
-                <span>/</span>
-                
-                <a class="tag" href="/tags/#统计机器学习笔记" title="统计机器学习笔记">统计机器学习笔记</a>
-                <span>/</span>
-                
-                
-            </p>
+        <div id="disqus_thread"></div>
+
+        <div id="lv-container">
         </div>
+
     </div>
-    
 </div>
-<ul class="pager">
-    
-    <li class="previous">
-        <a href="/page/2/">&larr; Newer Posts</a>
-    </li>
-    
-    
-</ul>
 
     </div>
 </div>
@@ -267,13 +224,32 @@
     // We expose some of the variables needed by the front end
     window.hexo_search_path = "search.json"
     window.hexo_root = "/"
-    window.isPost = false
+    window.isPost = true
 </script>
 
 <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 <script src="/js/index.js"></script>
 <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
+
+    <script>
+        /**
+         *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+         *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+        */
+        if( '' || '')
+        var disqus_config = function () {
+            this.page.url = '';  // Replace PAGE_URL with your page's canonical URL variable
+            this.page.identifier = ''; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        };
+
+        (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://fainle.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
 
 
 
